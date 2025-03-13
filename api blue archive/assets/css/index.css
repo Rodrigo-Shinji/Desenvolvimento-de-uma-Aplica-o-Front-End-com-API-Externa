@@ -18,7 +18,7 @@ body {
 .card {
   background-color: #9eddff;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 25px;
   width: 130px;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -33,7 +33,7 @@ body {
 
 img {
   width: 100%;
-  border-radius: 6px;
+  border-radius: 25px;
   margin-bottom: 5px;
 }
 
@@ -61,12 +61,14 @@ button:disabled {
   background-color: #c8c8c8;
   cursor: not-allowed;
 }
+
 .pagination {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
 }
+
 #back-to-top {
   margin-top: 10px;
 }
