@@ -15,7 +15,7 @@ Este projeto se baseia na API do jogo para celular Fate/Grand Order (FGO) que fo
 
 ## Design:
 
-O projeto teve seu design inspirado no menu do jogo, utilizado como referência. A imagem a seguir ilustra essa inspiração.
+O projeto teve seu design inspirado no menu do jogo, especialmente nas cores de textos e botões, que serviram como referência visual. A imagem a seguir ilustra essa inspiração.
 
 ![image](https://github.com/user-attachments/assets/638f392f-c734-4bca-81b0-98ddc509ce2c)
 
