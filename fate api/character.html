@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalhes do Espírito Heroico</title>
+    <link rel="stylesheet" href="./assets/css/character.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <img
+      class="img-logo"
+      src="./img/Fate_Grand_Order_logo.png"
+      alt="fgo-logo"
+    />
+    <h1>Detalhes do Espírito Heroico</h1>
+    <div class="character-details" id="character-details"></div>
+
+    <button onclick="window.location.href='index.html'" id="btn-back">
+      <strong>Voltar</strong>
+    </button>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const servantId = params.get("id");
+      const container = document.getElementById("character-details");
+
+      async function getServant(id) {
+        try {
+          container.innerHTML = "Carregando...";
+          const response = await fetch(
+            `https://api.atlasacademy.io/nice/NA/servant/${id}`
+          );
+          const data = await response.json();
+
+          if (!data) {
+            throw new Error("Servidor não encontrado");
+          }
+
+          const charaGraphAscension = data.extraAssets.charaGraph.ascension;
+
+          function createCarousel(images, carouselId) {
+            let carouselItems = "";
+            Object.values(images).forEach((imageUrl, index) => {
+              carouselItems += `
+                            <div class="carousel-item ${
+                              index == 0 ? "active" : ""
+                            }">
+                                <img src="${imageUrl}" class="d-block w-100" alt="Ascension ${
+                index + 1
+              }">
+                            </div>
+                        `;
+            });
+
+            return `
+                        <div id="${carouselId}" class="carousel slide">
+                            <div class="carousel-inner">
+                                ${carouselItems}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true">
+                                    <img src="./img/arrow.png" alt="Anterior">
+                                </span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true">
+                                    <img src="./img/arrow.png" alt="Próximo">
+                                </span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    `;
+          }
+
+          let noblePhantasmsDetails = "";
+          if (data.noblePhantasms && data.noblePhantasms.length > 0) {
+            noblePhantasmsDetails = data.noblePhantasms
+              .map(
+                (np) => `
+                        <div>
+                            <strong>${np.name}</strong> (${np.rank}, ${np.type})<br>
+                            ${np.detail}
+                        </div>
+                    `
+              )
+              .join("");
+          } else {
+            noblePhantasmsDetails = "Informação indisponivel";
+          }
+
+          container.innerHTML = `
+                    <div class="character-content">
+                        <div class="carousel-container">
+                            ${createCarousel(
+                              charaGraphAscension,
+                              "charaGraphCarousel"
+                            )}
+                        </div>
+                        <div class="character-info">
+                            <h2>${data.name}</h2>
+                            <p><strong>Classe:</strong> ${data.className}</p>
+                            <p><strong>Raridade:</strong> ${
+                              data.rarity
+                            } estrelas</p>
+                            <p><strong>Gênero: </strong> ${data.gender}</p>
+                            <p><strong>Atributo:</strong> ${data.attribute}</p>
+                            <p><strong>Custo:</strong> ${data.cost}</p>
+                            <p><strong>Level Máximo:</strong> ${data.lvMax}</p>
+                            <p><strong>HP Máximo:</strong> ${data.hpMax}</p>
+                            <p><strong>ATK Máximo:</strong> ${data.atkMax}</p>
+                            <p><strong>Cartas:</strong> ${data.cards.join(
+                              ", "
+                            )}</p>
+                            <p><strong>Fantasma(s) Nobre(s):</strong> ${noblePhantasmsDetails}</p>
+                        </div>
+                    </div>
+                `;
+        } catch (error) {
+          console.error("Erro ao carregar servidor", error);
+          container.innerHTML = "Erro ao carregar o servidor";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        if (servantId) {
+          getServant(servantId);
+        } else {
+          container.innerHTML = "<p>ID do servo inválido</p>";
+        }
+      });
+    </script>
+  </body>
+</html>

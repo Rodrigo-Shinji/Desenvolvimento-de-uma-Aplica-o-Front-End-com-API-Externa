@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Espíritos Heroicos</title>
+    <link rel="stylesheet" href="./assets/css/index.css" />
+  </head>
+  <body>
+    <img
+      class="img-logo"
+      src="./img/Fate_Grand_Order_logo.png"
+      alt="fgo-logo"
+    />
+    <h1>Lista de Espíritos Heroicos</h1>
+    <div class="container" id="character-container"></div>
+
+    <div class="pagination" id="pagination">
+      <button id="load-more"><strong>Carregar Mais</strong></button>
+    </div>
+
+    <script>
+      const container = document.getElementById("character-container");
+      const loadMoreButton = document.getElementById("load-more");
+
+      const servantsPorPagina = 12;
+      let servants = [];
+
+      function gerarIds(limite) {
+        const ids = [];
+        for (let i = 1; i <= limite; i++) {
+          ids.push(i);
+        }
+        return ids;
+      }
+
+      let servantIds = gerarIds(375);
+
+      async function getServants() {
+        try {
+          container.innerHTML = "Carregando...";
+
+          servants = [];
+          for (let i = 0; i < servantsPorPagina && i < servantIds.length; i++) {
+            const id = servantIds[i];
+            const response = await fetch(
+              `https://api.atlasacademy.io/nice/NA/servant/${id}`
+            );
+            if (response.ok) {
+              const servant = await response.json();
+              if (servant) {
+                servants.push(servant);
+              }
+            } else {
+              console.error(
+                `Erro ao obter detalhes dos servos ${id}: ${response.status} ${response.statusText}`
+              );
+            }
+          }
+
+          if (servants.length == 0) {
+            throw new Error("Nenhum servo encontrado");
+          }
+
+          exibirServants();
+          atualizarBotoesPaginacao();
+        } catch (error) {
+          console.error("Erro ao carregar servos", error);
+          container.innerHTML = "Erro ao carregar servos";
+        }
+      }
+
+      function exibirServants() {
+        container.innerHTML = "";
+        const inicio = 0;
+        const fim = servants.length;
+        const servantsPagina = servants.slice(inicio, fim);
+
+        servantsPagina.forEach((servant) => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          let imageUrl;
+          if (servant.extraAssets?.faces?.ascension) {
+            const ascensionFaces = servant.extraAssets.faces.ascension;
+            if (
+              typeof ascensionFaces == "object" &&
+              Object.keys(ascensionFaces).length == 1
+            ) {
+              imageUrl = ascensionFaces["0"];
+            } else {
+              imageUrl = ascensionFaces[3];
+            }
+          } else {
+            imageUrl = "";
+          }
+
+          card.innerHTML = `
+                    <img class="img-container" src="${imageUrl}" alt="${servant.name}">
+                    <p><strong>${servant.name}</strong></p>
+                    <p>Classe: ${servant.className}</p>
+                `;
+          card.addEventListener("click", () => {
+            window.location.href = `character.html?id=${servant.id}`;
+          });
+          container.appendChild(card);
+        });
+      }
+
+      function atualizarBotoesPaginacao() {
+        loadMoreButton.disabled = servants.length >= servantIds.length;
+      }
+
+      loadMoreButton.addEventListener("click", () => {
+        const proximoInicio = servants.length;
+        const proximoFim = proximoInicio + servantsPorPagina;
+        for (
+          let i = proximoInicio;
+          i < proximoFim && i < servantIds.length;
+          i++
+        ) {
+          const id = servantIds[i];
+          fetch(`https://api.atlasacademy.io/nice/NA/servant/${id}`)
+            .then((response) => response.json())
+            .then((servant) => {
+              if (servant) {
+                servants.push(servant);
+                exibirServants();
+                atualizarBotoesPaginacao();
+              }
+            })
+            .catch((error) =>
+              console.error(`Erro ao obter detalhes do servo ${id}: ${error}`)
+            );
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", getServants);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.img-logo {
+  width: 400px;
+  display: block;
+  margin: 20px auto;
+  height: 50%;
+}
+
+h1 {
+  font-size: 30px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: rgb(25, 28, 69);
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: solid;
+  border-color: rgb(211, 201, 106);
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.character-details {
+  width: 80%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border: rgb(211, 201, 106);
+  border-style: solid;
+}
+
+.character-details h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.character-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.carousel-container {
+  text-align: left;
+}
+
+.character-info {
+  text-align: left;
+}
+
+.character-details h3 {
+  color: rgb(49, 44, 38);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.character-details p {
+  color: rgb(49, 44, 38);
+  margin-bottom: 5px;
+}
+
+.character-details strong {
+  font-weight: bold;
+}
+
+.carousel {
+  margin-bottom: 20px;
+}
+
+.carousel-inner img {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+#btn-back {
+  display: block;
+  margin: 20px auto;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(15, 73, 147);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+  border-color: white;
+  border-style: solid;
+  border-radius: 25px;
+}
+
+#btn-back:hover {
+  background-color: rgb(15, 153, 228);
+  transform: scale(1.03);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.4);
+}
+
+.carousel-control-prev-icon img,
+.carousel-control-next-icon img {
+  width: 32px;
+  height: 32px;
+}
+
+.carousel-control-next-icon img {
+  transform: scaleX(+1);
+}
+
+.carousel-control-prev-icon img {
+  transform: scaleX(-1);
+}
