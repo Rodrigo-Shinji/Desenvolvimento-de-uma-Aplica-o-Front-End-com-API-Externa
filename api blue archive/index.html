@@ -3,11 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Personagens Blue Archive</title>
+    <title>Blue Archive - Estudantes</title>
     <link rel="stylesheet" href="./assets/css/index.css" />
   </head>
   <body>
-    <h1>Personagens Blue Archive</h1>
+    <img
+      class="img-logo"
+      src="./img/blue_archive_logo.png"
+      alt="blue-archive-logo"
+    />
+    <h1>Lista de Estudantes</h1>
     <div class="container" id="character-container"></div>
 
     <div class="pagination">
@@ -49,7 +54,7 @@
             card.className = "card";
             const imageUrl = character.photoUrl;
             card.innerHTML = `
-                        <img src="${imageUrl}" alt="${character.name}">
+                        <img class="img-container" src="${imageUrl}" alt="${character.name}">
                         <p><strong>${character.name}</strong></p>
                         <p>${character.school}</p>
                     `;

@@ -3,11 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detalhes do Personagem</title>
+    <img
+      class="img-logo"
+      src="./img/blue_archive_logo.png"
+      alt="blue-archive-logo"
+    />
+    <title>Detalhes dos Estudantes</title>
     <link rel="stylesheet" href="./assets/css/character.css" />
   </head>
   <body>
-    <h1>Detalhes do Personagem</h1>
+    <h1>Detalhes do Estudante</h1>
     <div class="container" id="character-details"></div>
 
     <button onclick="window.location.href='index.html'">Voltar</button>
@@ -34,15 +39,11 @@
           const character = data.data[0];
 
           container.innerHTML = `
-                    <img src="${character.photoUrl}" alt="${character.name}">
-                    <h2>${character.name}</h2>
+                    <img class="img-container" src="${character.photoUrl}" alt="${character.name}">
+                    <p><strong>Nome: </strong> ${character.name}</p>
                     <p><strong>Escola: </strong>${character.school}</p>
-                    <p><strong>Aniversário: </strong>${
-                      character.birthday || "Desconhecido"
-                    }</p>
-                    <p><strong>Tipo de Dano: </strong>${
-                      character.damageType || "Desconhecido"
-                    }</p>
+                    <p><strong>Aniversário: </strong>${character.birthday}</p>
+                    <p><strong>Tipo de Dano: </strong>${character.damageType}</p>
                 `;
         } catch (error) {
           console.error("Erro ao carregar personagem", error);
