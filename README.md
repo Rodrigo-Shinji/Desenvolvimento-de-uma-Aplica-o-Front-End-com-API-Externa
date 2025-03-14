@@ -1,4 +1,6 @@
-Este projeto consiste na criação de uma API RESTful para acesso a dados do jogo Blue Archive..
+## Resumo do projeto
+
+Este projeto se baseia na API do jogo para celular "Blue Archive", um RPG com estilo anime e ambientação escolar, onde os personagens são chamados de "estudantes". O foco do jogo reside na jogabilidade estratégica, exigindo a montagem de equipes para completar missões e aprimorar os personagens.
 
 ## Links
 
